@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -69,6 +70,7 @@ public class LocationAcitivity extends BaseMapActivity implements LocationSource
                 mListener.onLocationChanged(aMapLocation);
                 latitude = aMapLocation.getLatitude();
                 longtitude = aMapLocation.getLongitude();
+                Toast.makeText(this, latitude + " " + longtitude, Toast.LENGTH_SHORT).show();
             } else {
                 String errText = "locate error " + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
                 Log.e("AmapErr", errText);
