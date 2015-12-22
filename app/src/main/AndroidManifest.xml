@@ -40,7 +40,11 @@
             android:name=".LocationAcitivity"
             android:label="@string/location_acitvity"
             android:screenOrientation="portrait">
+        </activity>
 
+        <activity android:name=".CircleAcitivity"
+            android:label="@string/circle_activity"
+            android:screenOrientation="portrait">
 
         </activity>
 

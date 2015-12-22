@@ -22,28 +22,25 @@ import com.amap.api.maps2d.model.MyLocationStyle;
 /**
  * Created by Administrator on 2015/12/22.
  */
-public class LocationAcitivity extends Activity implements LocationSource, AMapLocationListener {
+public class LocationAcitivity extends BaseMapActivity implements LocationSource, AMapLocationListener {
 
-    private MapView mapView;
-    private AMap aMap;
+
     private OnLocationChangedListener mListener;
     private AMapLocationClient mLocationClient;
     private AMapLocationClientOption mLocationClientOption;
+    private double latitude, longtitude;
+
+    @Override
+    int getLayout() {
+        return R.layout.activity_map_view;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location);
-        mapView = (MapView) findViewById(R.id.mapView);
-        mapView.onCreate(savedInstanceState);
-        init();
-    }
-
-    private void init() {
-        aMap = mapView.getMap();
         setUpMap();
-
     }
+
 
     private void setUpMap() {
         MyLocationStyle myLocationStyle = new MyLocationStyle();
@@ -57,36 +54,21 @@ public class LocationAcitivity extends Activity implements LocationSource, AMapL
         aMap.setMyLocationEnabled(true);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mapView.onResume();
-    }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mapView.onPause();
         deactivate();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mapView.onSaveInstanceState(outState);
-    }
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (mListener != null && aMapLocation != null) {
             if (aMapLocation != null && aMapLocation.getErrorCode() == 0) {
                 mListener.onLocationChanged(aMapLocation);
+                latitude = aMapLocation.getLatitude();
+                longtitude = aMapLocation.getLongitude();
             } else {
                 String errText = "locate error " + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
                 Log.e("AmapErr", errText);

@@ -31,8 +31,13 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listView = (ListView) findViewById(R.id.main_acitvity_list_view);
+
+
         list.add("Location");
+        list.add("Circle");
         intents.add(new Intent(MainActivity.this, LocationAcitivity.class));
+        intents.add(new Intent(MainActivity.this, CircleAcitivity.class));
+
         adapter = new MainAcitivityAdapter(this, list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
