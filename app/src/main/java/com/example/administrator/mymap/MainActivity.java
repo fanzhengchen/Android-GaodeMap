@@ -2,6 +2,7 @@ package com.example.administrator.mymap;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +36,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        listView = (ListView) findViewById(R.id.main_acitvity_list_view);
+        setUpData();
+        setUpImageLoader();
+    }
 
+    private void setUpData() {
+        listView = (ListView) findViewById(R.id.main_acitvity_list_view);
 
         list.add("Location");
         list.add("Circle");
@@ -41,6 +51,20 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         adapter = new MainAcitivityAdapter(this, list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
+    }
+
+    private void setUpImageLoader() {
+        DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
+                .showImageForEmptyUri(R.drawable.stub_image)
+                .showImageOnLoading(R.drawable.stub_image)
+                .showImageOnFail(R.drawable.stub_image)
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .bitmapConfig(Bitmap.Config.ARGB_8888)
+                .resetViewBeforeLoading(true).build();
+        ImageLoaderConfiguration.Builder builder = new ImageLoaderConfiguration.Builder(this)
+                .defaultDisplayImageOptions(displayImageOptions);
+
+        ImageLoader.getInstance().init(builder.build());
     }
 
     @Override
